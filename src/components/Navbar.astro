@@ -1,0 +1,648 @@
+---
+import {
+    Home,
+    Wrench,
+    MessageSquare,
+    Info,
+    Phone,
+    Menu,
+    X,
+    Globe,
+} from "lucide-astro";
+import type { Language, SectionId, Translations } from "../types";
+
+interface Props {
+    t: Translations;
+    lang: Language;
+}
+
+const { t, lang } = Astro.props;
+
+const navItems = [
+    { id: "home", label: t.nav.home, Icon: Home },
+    { id: "services", label: t.nav.services, Icon: Wrench },
+    { id: "about", label: t.nav.about, Icon: Info },
+    { id: "testimonials", label: t.nav.testimonials, Icon: MessageSquare },
+    { id: "contact", label: t.nav.contact, Icon: Phone },
+];
+---
+
+<header
+    class="fixed top-6 left-0 right-0 z-50 flex justify-center px-4 animate-slide-down"
+>
+    <div
+        id="navbar-container"
+        class="navbar-container w-full max-w-6xl bg-white rounded-full shadow-xl border-2 border-gray-300/60 px-6 sm:px-8 py-4 transition-all duration-300"
+    >
+        <!-- Desktop Navigation -->
+        <div class="hidden lg:flex items-center justify-between w-full gap-4">
+            <!-- Left Navigation -->
+            <nav class="flex justify-start items-center space-x-2 flex-1">
+                {
+                    navItems.slice(0, 2).map((item) => (
+                        <a
+                            href={`#${item.id}`}
+                            data-nav-link={item.id}
+                            class="nav-link group relative flex items-center gap-2 text-sm font-semibold text-gray-700 hover:text-cyan-dark transition-all duration-300 px-3 py-2 rounded-lg hover:bg-cyan-light/5"
+                        >
+                            <item.Icon class="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
+                            <span class="relative z-10">{item.label}</span>
+                            <span class="absolute inset-0 border-2 border-transparent group-hover:border-cyan-light/30 rounded-lg transition-all duration-300" />
+                        </a>
+                    ))
+                }
+            </nav>
+
+            <!-- Center Logo -->
+            <a
+                href="#home"
+                data-scroll-to="home"
+                class="logo-link hover:scale-105 transition-transform duration-300 flex-shrink-0"
+            >
+                <img
+                    id="logo-desktop"
+                    src="/images/logo-header.png"
+                    alt={t.companyName}
+                    class="h-11 w-auto object-contain transition-all duration-300"
+                />
+            </a>
+
+            <!-- Right Navigation -->
+            <nav class="flex justify-end items-center space-x-2 flex-1">
+                {
+                    navItems.slice(3).map((item) => (
+                        <a
+                            href={`#${item.id}`}
+                            data-nav-link={item.id}
+                            class="nav-link group relative flex items-center gap-2 text-sm font-semibold text-gray-700 hover:text-cyan-dark transition-all duration-300 px-3 py-2 rounded-lg hover:bg-cyan-light/5"
+                        >
+                            <item.Icon class="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
+                            <span class="relative z-10">{item.label}</span>
+                            <span class="absolute inset-0 border-2 border-transparent group-hover:border-cyan-light/30 rounded-lg transition-all duration-300" />
+                        </a>
+                    ))
+                }
+
+                <!-- Language Switcher -->
+                <div class="relative pl-2 ml-2 border-l border-gray-200">
+                    <button
+                        id="lang-menu-button"
+                        type="button"
+                        class="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold text-gray-700 hover:bg-gray-100 transition-all duration-200 group"
+                        aria-expanded="false"
+                        aria-haspopup="true"
+                    >
+                        <Globe
+                            class="w-4 h-4 text-gray-500 group-hover:text-cyan-dark transition-colors duration-200"
+                        />
+                        <span class="uppercase">{lang}</span>
+                        <svg
+                            class="w-4 h-4 text-gray-500 transition-transform duration-200 group-hover:text-cyan-dark"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+
+                    <!-- Dropdown Menu -->
+                    <div
+                        id="lang-menu"
+                        class="lang-menu absolute right-0 mt-2 w-36 opacity-0 invisible transition-all duration-200 origin-top-right"
+                        role="menu"
+                        aria-orientation="vertical"
+                        aria-labelledby="lang-menu-button"
+                    >
+                        <div
+                            class="bg-white rounded-lg shadow-xl border border-gray-200 py-1 overflow-hidden"
+                        >
+                            <button
+                                data-lang="en"
+                                class={`lang-option flex items-center w-full px-4 py-2.5 text-sm font-medium transition-all duration-200 ${
+                                    lang === "en"
+                                        ? "bg-cyan-dark/5 text-cyan-dark border-l-2 border-cyan-dark"
+                                        : "text-gray-700 hover:bg-gray-50 border-l-2 border-transparent"
+                                }`}
+                                role="menuitem"
+                            >
+                                <span class="flex-1 text-left">English</span>
+                                {
+                                    lang === "en" && (
+                                        <svg
+                                            class="w-4 h-4 text-cyan-dark"
+                                            fill="currentColor"
+                                            viewBox="0 0 20 20"
+                                        >
+                                            <path
+                                                fill-rule="evenodd"
+                                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                                clip-rule="evenodd"
+                                            />
+                                        </svg>
+                                    )
+                                }
+                            </button>
+                            <button
+                                data-lang="es"
+                                class={`lang-option flex items-center w-full px-4 py-2.5 text-sm font-medium transition-all duration-200 ${
+                                    lang === "es"
+                                        ? "bg-cyan-dark/5 text-cyan-dark border-l-2 border-cyan-dark"
+                                        : "text-gray-700 hover:bg-gray-50 border-l-2 border-transparent"
+                                }`}
+                                role="menuitem"
+                            >
+                                <span class="flex-1 text-left">Español</span>
+                                {
+                                    lang === "es" && (
+                                        <svg
+                                            class="w-4 h-4 text-cyan-dark"
+                                            fill="currentColor"
+                                            viewBox="0 0 20 20"
+                                        >
+                                            <path
+                                                fill-rule="evenodd"
+                                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                                clip-rule="evenodd"
+                                            />
+                                        </svg>
+                                    )
+                                }
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Mobile Navigation -->
+        <div class="flex lg:hidden items-center justify-between w-full py-1">
+            <button
+                id="mobile-menu-btn"
+                class="p-2 text-gray-700 hover:text-cyan-dark transition-all duration-300 hover:bg-cyan-light/10 rounded-lg order-last"
+                aria-label="Toggle menu"
+            >
+                <Menu class="menu-icon w-6 h-6" />
+                <X class="close-icon w-6 h-6 hidden" />
+            </button>
+
+            <a
+                href="#home"
+                data-scroll-to="home"
+                class="logo-link hover:scale-105 transition-transform duration-300 mx-auto"
+            >
+                <img
+                    id="logo-mobile"
+                    src="/images/logo-header.png"
+                    alt={t.companyName}
+                    class="h-10 w-auto object-contain transition-all duration-300"
+                />
+            </a>
+        </div>
+    </div>
+</header>
+
+<!-- Mobile Menu -->
+<div
+    id="mobile-menu"
+    class="mobile-menu fixed top-24 left-0 right-0 z-40 lg:hidden px-4 max-h-0 overflow-hidden transition-all duration-300"
+>
+    <div
+        class="bg-white rounded-2xl shadow-xl border-2 border-gray-300/60 p-5 animate-menu-slide max-w-md mx-auto"
+    >
+        <nav class="space-y-1">
+            {
+                navItems.map((item, index) => (
+                    <a
+                        href={`#${item.id}`}
+                        data-mobile-nav-link={item.id}
+                        class="mobile-nav-link group relative flex items-center gap-3 px-4 py-3 rounded-xl text-base font-semibold text-gray-700 hover:text-cyan-dark transition-all duration-300 hover:bg-cyan-light/10"
+                        style={`animation-delay: ${index * 50}ms`}
+                    >
+                        <item.Icon class="w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
+                        <span>{item.label}</span>
+                        <span class="absolute inset-0 border-2 border-transparent group-hover:border-cyan-light/30 rounded-xl transition-all duration-300" />
+                    </a>
+                ))
+            }
+
+            <!-- Language Switcher Mobile -->
+            <div class="relative px-4 py-3 border-t border-gray-200 mt-2 pt-3">
+                <button
+                    id="lang-menu-mobile-button"
+                    type="button"
+                    class="flex items-center gap-2 w-full px-4 py-3 rounded-xl text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-all duration-200 group border border-gray-200"
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                >
+                    <Globe
+                        class="w-5 h-5 text-gray-500 group-hover:text-cyan-dark transition-colors duration-200"
+                    />
+                    <span class="flex-1 text-left uppercase"
+                        >{lang === "en" ? "English" : "Español"}</span
+                    >
+                    <svg
+                        class="w-4 h-4 text-gray-500 transition-transform duration-200 group-hover:text-cyan-dark group-hover:rotate-180"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+
+                <!-- Dropdown Menu Mobile -->
+                <div
+                    id="lang-menu-mobile"
+                    class="lang-menu-mobile mt-2 max-h-0 opacity-0 invisible transition-all duration-200 overflow-hidden"
+                    role="menu"
+                    aria-orientation="vertical"
+                    aria-labelledby="lang-menu-mobile-button"
+                >
+                    <div
+                        class="bg-gray-50 rounded-xl border border-gray-200 overflow-hidden"
+                    >
+                        <button
+                            data-lang-mobile="en"
+                            class={`lang-option-mobile flex items-center w-full px-4 py-3 text-sm font-medium transition-all duration-200 ${
+                                lang === "en"
+                                    ? "bg-cyan-dark/5 text-cyan-dark border-l-4 border-cyan-dark"
+                                    : "text-gray-700 hover:bg-white border-l-4 border-transparent hover:border-cyan-light/30"
+                            }`}
+                            role="menuitem"
+                        >
+                            <span class="flex-1 text-left">English</span>
+                            {
+                                lang === "en" && (
+                                    <svg
+                                        class="w-5 h-5 text-cyan-dark"
+                                        fill="currentColor"
+                                        viewBox="0 0 20 20"
+                                    >
+                                        <path
+                                            fill-rule="evenodd"
+                                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                            clip-rule="evenodd"
+                                        />
+                                    </svg>
+                                )
+                            }
+                        </button>
+                        <button
+                            data-lang-mobile="es"
+                            class={`lang-option-mobile flex items-center w-full px-4 py-3 text-sm font-medium transition-all duration-200 ${
+                                lang === "es"
+                                    ? "bg-cyan-dark/5 text-cyan-dark border-l-4 border-cyan-dark"
+                                    : "text-gray-700 hover:bg-white border-l-4 border-transparent hover:border-cyan-light/30"
+                            }`}
+                            role="menuitem"
+                        >
+                            <span class="flex-1 text-left">Español</span>
+                            {
+                                lang === "es" && (
+                                    <svg
+                                        class="w-5 h-5 text-cyan-dark"
+                                        fill="currentColor"
+                                        viewBox="0 0 20 20"
+                                    >
+                                        <path
+                                            fill-rule="evenodd"
+                                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                            clip-rule="evenodd"
+                                        />
+                                    </svg>
+                                )
+                            }
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+
+<style>
+    @keyframes slide-down {
+        from {
+            transform: translateY(-100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes menu-slide {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .animate-slide-down {
+        animation: slide-down 0.6s ease-out;
+    }
+
+    .animate-menu-slide {
+        animation: menu-slide 0.3s ease-out;
+    }
+
+    /* Navbar scroll effect */
+    .navbar-container.navbar-scrolled {
+        padding-top: 0.75rem; /* py-3 */
+        padding-bottom: 0.75rem;
+    }
+
+    .nav-link.active {
+        color: #067f75;
+        font-weight: 700;
+    }
+
+    .nav-link.active::before {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #0e8d81, transparent);
+        border-radius: 2px;
+    }
+
+    .mobile-nav-link.active {
+        background-color: rgba(14, 141, 129, 0.15);
+        color: #067f75;
+        font-weight: 700;
+        border-color: rgba(14, 141, 129, 0.3);
+    }
+
+    .mobile-menu.open {
+        max-height: 600px;
+    }
+
+    /* Language menu dropdown */
+    .lang-menu {
+        transform: scale(0.95);
+        z-index: 60;
+        transition:
+            opacity 0.2s ease,
+            visibility 0.2s ease,
+            transform 0.2s ease;
+    }
+
+    .lang-menu.open {
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: scale(1);
+    }
+
+    .lang-menu-mobile {
+        max-height: 0;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .lang-menu-mobile.open {
+        max-height: 200px;
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Smooth transitions for all interactive elements */
+    .nav-link,
+    .mobile-nav-link,
+    .lang-btn,
+    .lang-btn-mobile,
+    .lang-option,
+    .lang-option-mobile {
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Logo centering for desktop */
+    @media (min-width: 1024px) {
+        .logo-link {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    }
+</style>
+
+<script is:inline>
+    // Language dropdown menu (Desktop)
+    const langMenuButton = document.getElementById("lang-menu-button");
+    const langMenu = document.getElementById("lang-menu");
+
+    langMenuButton?.addEventListener("click", () => {
+        const isOpen = langMenu?.classList.contains("open");
+        if (isOpen) {
+            langMenu?.classList.remove("open");
+            langMenuButton?.setAttribute("aria-expanded", "false");
+        } else {
+            langMenu?.classList.add("open");
+            langMenuButton?.setAttribute("aria-expanded", "true");
+        }
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener("click", function (e) {
+        if (
+            langMenuButton &&
+            !langMenuButton.contains(e.target) &&
+            langMenu &&
+            !langMenu.contains(e.target)
+        ) {
+            langMenu.classList.remove("open");
+            langMenuButton.setAttribute("aria-expanded", "false");
+        }
+    });
+
+    // Language dropdown menu (Mobile)
+    var langMenuMobileButton = document.getElementById(
+        "lang-menu-mobile-button",
+    );
+    var langMenuMobile = document.getElementById("lang-menu-mobile");
+
+    if (langMenuMobileButton) {
+        langMenuMobileButton.addEventListener("click", function () {
+            var isOpen =
+                langMenuMobile && langMenuMobile.classList.contains("open");
+            if (isOpen) {
+                langMenuMobile.classList.remove("open");
+                langMenuMobileButton.setAttribute("aria-expanded", "false");
+            } else {
+                if (langMenuMobile) langMenuMobile.classList.add("open");
+                langMenuMobileButton.setAttribute("aria-expanded", "true");
+            }
+        });
+    }
+
+    // Mobile menu toggle
+    var mobileMenuBtn = document.getElementById("mobile-menu-btn");
+    var mobileMenu = document.getElementById("mobile-menu");
+    var menuIcon = mobileMenuBtn
+        ? mobileMenuBtn.querySelector(".menu-icon")
+        : null;
+    var closeIcon = mobileMenuBtn
+        ? mobileMenuBtn.querySelector(".close-icon")
+        : null;
+
+    if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener("click", function () {
+            if (mobileMenu) mobileMenu.classList.toggle("open");
+            if (menuIcon) menuIcon.classList.toggle("hidden");
+            if (closeIcon) closeIcon.classList.toggle("hidden");
+        });
+    }
+
+    // Smooth scroll for navigation links
+    document
+        .querySelectorAll(
+            "[data-nav-link], [data-mobile-nav-link], [data-scroll-to]",
+        )
+        .forEach(function (link) {
+            link.addEventListener("click", function (e) {
+                e.preventDefault();
+                var target =
+                    e.currentTarget.getAttribute("data-nav-link") ||
+                    e.currentTarget.getAttribute("data-mobile-nav-link") ||
+                    e.currentTarget.getAttribute("data-scroll-to");
+
+                if (target) {
+                    var element = document.getElementById(target);
+                    if (element) {
+                        element.scrollIntoView({ behavior: "smooth" });
+                    }
+
+                    // Cerrar menú móvil
+                    if (mobileMenu) mobileMenu.classList.remove("open");
+                    if (menuIcon) menuIcon.classList.remove("hidden");
+                    if (closeIcon) closeIcon.classList.add("hidden");
+                }
+            });
+        });
+
+    // Cambio de idioma
+    function changeLang(newLang) {
+        window.location.href = "/" + newLang;
+    }
+
+    // Handle desktop language option clicks
+    document.querySelectorAll("[data-lang]").forEach(function (btn) {
+        btn.addEventListener("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var lang = e.currentTarget.getAttribute("data-lang");
+            if (lang) {
+                changeLang(lang);
+            }
+        });
+    });
+
+    // Handle mobile language option clicks
+    document.querySelectorAll("[data-lang-mobile]").forEach(function (btn) {
+        btn.addEventListener("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var lang = e.currentTarget.getAttribute("data-lang-mobile");
+            if (lang) {
+                changeLang(lang);
+            }
+        });
+    });
+
+    // Active section observer
+    var sections = document.querySelectorAll("section[id]");
+    var navLinks = document.querySelectorAll("[data-nav-link]");
+    var mobileNavLinks = document.querySelectorAll("[data-mobile-nav-link]");
+
+    var observerOptions = {
+        threshold: 0.3,
+        rootMargin: "-100px 0px -70% 0px",
+    };
+
+    var sectionObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+                var id = entry.target.id;
+
+                // Desktop
+                navLinks.forEach(function (link) {
+                    if (link.getAttribute("data-nav-link") === id) {
+                        link.classList.add("active");
+                    } else {
+                        link.classList.remove("active");
+                    }
+                });
+
+                // Mobile
+                mobileNavLinks.forEach(function (link) {
+                    if (link.getAttribute("data-mobile-nav-link") === id) {
+                        link.classList.add("active");
+                    } else {
+                        link.classList.remove("active");
+                    }
+                });
+            }
+        });
+    }, observerOptions);
+
+    sections.forEach(function (section) {
+        sectionObserver.observe(section);
+    });
+
+    // Navbar scroll effect
+    var navbarContainer = document.getElementById("navbar-container");
+    var logoDesktop = document.getElementById("logo-desktop");
+    var logoMobile = document.getElementById("logo-mobile");
+
+    function handleNavbarScroll() {
+        var currentScrollY = window.scrollY;
+
+        if (currentScrollY > 50) {
+            // Reduce navbar padding
+            if (navbarContainer) {
+                navbarContainer.style.paddingTop = "0.75rem";
+                navbarContainer.style.paddingBottom = "0.75rem";
+            }
+            // Reduce logo size
+            if (logoDesktop) {
+                logoDesktop.style.height = "2.5rem";
+            }
+            if (logoMobile) {
+                logoMobile.style.height = "2.25rem";
+            }
+        } else {
+            // Restore original sizes
+            if (navbarContainer) {
+                navbarContainer.style.paddingTop = "1rem";
+                navbarContainer.style.paddingBottom = "1rem";
+            }
+            if (logoDesktop) {
+                logoDesktop.style.height = "2.75rem";
+            }
+            if (logoMobile) {
+                logoMobile.style.height = "2.5rem";
+            }
+        }
+    }
+
+    window.addEventListener("scroll", handleNavbarScroll, { passive: true });
+    handleNavbarScroll();
+</script>
