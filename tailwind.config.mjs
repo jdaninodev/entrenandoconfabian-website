@@ -5,8 +5,14 @@ export default {
         extend: {
             colors: {
                 cyan: {
-                    dark: '#067f75',
-                    light: '#0e8d81',
+                    dark: '#067f75', // Primary Brand Color
+                    light: '#0e8d81', // Hover/Active State
+                    msg: '#00D1FF' // Message/Accent
+                },
+                dark: {
+                    bg: '#0a0a0a',      // Main Background
+                    surface: '#121212', // Cards/Sections
+                    border: '#262626'   // Borders
                 }
             }
         },

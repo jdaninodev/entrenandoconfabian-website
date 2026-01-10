@@ -8,7 +8,7 @@ import {
     Menu,
     X,
     Globe,
-} from "lucide-astro";
+} from "lucide-react";
 import type { Language, SectionId, Translations } from "../types";
 
 interface Props {
@@ -32,7 +32,7 @@ const navItems = [
 >
     <div
         id="navbar-container"
-        class="navbar-container w-full max-w-6xl bg-white rounded-full shadow-xl border-2 border-gray-300/60 px-6 sm:px-8 py-4 transition-all duration-300"
+        class="navbar-container w-full max-w-6xl bg-dark-surface/90 backdrop-blur-md rounded-full shadow-2xl border border-dark-border px-6 sm:px-8 py-4 transition-all duration-300"
     >
         <!-- Desktop Navigation -->
         <div class="hidden lg:flex items-center justify-between w-full gap-4">
@@ -43,11 +43,11 @@ const navItems = [
                         <a
                             href={`#${item.id}`}
                             data-nav-link={item.id}
-                            class="nav-link group relative flex items-center gap-2 text-sm font-semibold text-gray-700 hover:text-cyan-dark transition-all duration-300 px-3 py-2 rounded-lg hover:bg-cyan-light/5"
+                            class="nav-link group relative flex items-center gap-2 text-sm font-semibold text-gray-300 hover:text-cyan-msg transition-all duration-300 px-3 py-2 rounded-lg hover:bg-white/5"
                         >
-                            <item.Icon class="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
+                            <item.Icon className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
                             <span class="relative z-10">{item.label}</span>
-                            <span class="absolute inset-0 border-2 border-transparent group-hover:border-cyan-light/30 rounded-lg transition-all duration-300" />
+                            <span class="absolute inset-0 border border-transparent group-hover:border-cyan-light/30 rounded-lg transition-all duration-300" />
                         </a>
                     ))
                 }
@@ -61,9 +61,9 @@ const navItems = [
             >
                 <img
                     id="logo-desktop"
-                    src="/images/logo-header.png"
+                    src="/images/logo-entrenador.webp"
                     alt={t.companyName}
-                    class="h-11 w-auto object-contain transition-all duration-300"
+                    class="h-11 w-auto object-contain transition-all duration-300 brightness-0 invert"
                 />
             </a>
 
@@ -74,30 +74,30 @@ const navItems = [
                         <a
                             href={`#${item.id}`}
                             data-nav-link={item.id}
-                            class="nav-link group relative flex items-center gap-2 text-sm font-semibold text-gray-700 hover:text-cyan-dark transition-all duration-300 px-3 py-2 rounded-lg hover:bg-cyan-light/5"
+                            class="nav-link group relative flex items-center gap-2 text-sm font-semibold text-gray-300 hover:text-cyan-msg transition-all duration-300 px-3 py-2 rounded-lg hover:bg-white/5"
                         >
-                            <item.Icon class="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
+                            <item.Icon className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
                             <span class="relative z-10">{item.label}</span>
-                            <span class="absolute inset-0 border-2 border-transparent group-hover:border-cyan-light/30 rounded-lg transition-all duration-300" />
+                            <span class="absolute inset-0 border border-transparent group-hover:border-cyan-light/30 rounded-lg transition-all duration-300" />
                         </a>
                     ))
                 }
 
                 <!-- Language Switcher -->
-                <div class="relative pl-2 ml-2 border-l border-gray-200">
+                <div class="relative pl-2 ml-2 border-l border-gray-700">
                     <button
                         id="lang-menu-button"
                         type="button"
-                        class="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold text-gray-700 hover:bg-gray-100 transition-all duration-200 group"
+                        class="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold text-gray-300 hover:bg-white/5 transition-all duration-200 group"
                         aria-expanded="false"
                         aria-haspopup="true"
                     >
                         <Globe
-                            class="w-4 h-4 text-gray-500 group-hover:text-cyan-dark transition-colors duration-200"
+                            className="w-4 h-4 text-gray-400 group-hover:text-cyan-msg transition-colors duration-200"
                         />
                         <span class="uppercase">{lang}</span>
                         <svg
-                            class="w-4 h-4 text-gray-500 transition-transform duration-200 group-hover:text-cyan-dark"
+                            class="w-4 h-4 text-gray-400 transition-transform duration-200 group-hover:text-cyan-msg"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
@@ -119,14 +119,14 @@ const navItems = [
                         aria-labelledby="lang-menu-button"
                     >
                         <div
-                            class="bg-white rounded-lg shadow-xl border border-gray-200 py-1 overflow-hidden"
+                            class="bg-dark-surface rounded-lg shadow-xl border border-dark-border py-1 overflow-hidden"
                         >
                             <button
                                 data-lang="en"
                                 class={`lang-option flex items-center w-full px-4 py-2.5 text-sm font-medium transition-all duration-200 ${
                                     lang === "en"
-                                        ? "bg-cyan-dark/5 text-cyan-dark border-l-2 border-cyan-dark"
-                                        : "text-gray-700 hover:bg-gray-50 border-l-2 border-transparent"
+                                        ? "bg-cyan-dark/10 text-cyan-msg border-l-2 border-cyan-msg"
+                                        : "text-gray-300 hover:bg-white/5 border-l-2 border-transparent"
                                 }`}
                                 role="menuitem"
                             >
@@ -134,7 +134,7 @@ const navItems = [
                                 {
                                     lang === "en" && (
                                         <svg
-                                            class="w-4 h-4 text-cyan-dark"
+                                            class="w-4 h-4 text-cyan-msg"
                                             fill="currentColor"
                                             viewBox="0 0 20 20"
                                         >
@@ -151,8 +151,8 @@ const navItems = [
                                 data-lang="es"
                                 class={`lang-option flex items-center w-full px-4 py-2.5 text-sm font-medium transition-all duration-200 ${
                                     lang === "es"
-                                        ? "bg-cyan-dark/5 text-cyan-dark border-l-2 border-cyan-dark"
-                                        : "text-gray-700 hover:bg-gray-50 border-l-2 border-transparent"
+                                        ? "bg-cyan-dark/10 text-cyan-msg border-l-2 border-cyan-msg"
+                                        : "text-gray-300 hover:bg-white/5 border-l-2 border-transparent"
                                 }`}
                                 role="menuitem"
                             >
@@ -160,7 +160,7 @@ const navItems = [
                                 {
                                     lang === "es" && (
                                         <svg
-                                            class="w-4 h-4 text-cyan-dark"
+                                            class="w-4 h-4 text-cyan-msg"
                                             fill="currentColor"
                                             viewBox="0 0 20 20"
                                         >
@@ -183,11 +183,11 @@ const navItems = [
         <div class="flex lg:hidden items-center justify-between w-full py-1">
             <button
                 id="mobile-menu-btn"
-                class="p-2 text-gray-700 hover:text-cyan-dark transition-all duration-300 hover:bg-cyan-light/10 rounded-lg order-last"
+                class="p-2 text-gray-300 hover:text-cyan-msg transition-all duration-300 hover:bg-white/5 rounded-lg order-last"
                 aria-label="Toggle menu"
             >
-                <Menu class="menu-icon w-6 h-6" />
-                <X class="close-icon w-6 h-6 hidden" />
+                <Menu className="menu-icon w-6 h-6" />
+                <X className="close-icon w-6 h-6 hidden" />
             </button>
 
             <a
@@ -197,9 +197,9 @@ const navItems = [
             >
                 <img
                     id="logo-mobile"
-                    src="/images/logo-header.png"
+                    src="/images/logo-entrenador.webp"
                     alt={t.companyName}
-                    class="h-10 w-auto object-contain transition-all duration-300"
+                    class="h-10 w-auto object-contain transition-all duration-300 brightness-0 invert"
                 />
             </a>
         </div>
@@ -223,7 +223,7 @@ const navItems = [
                         class="mobile-nav-link group relative flex items-center gap-3 px-4 py-3 rounded-xl text-base font-semibold text-gray-700 hover:text-cyan-dark transition-all duration-300 hover:bg-cyan-light/10"
                         style={`animation-delay: ${index * 50}ms`}
                     >
-                        <item.Icon class="w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
+                        <item.Icon className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
                         <span>{item.label}</span>
                         <span class="absolute inset-0 border-2 border-transparent group-hover:border-cyan-light/30 rounded-xl transition-all duration-300" />
                     </a>
@@ -240,7 +240,7 @@ const navItems = [
                     aria-haspopup="true"
                 >
                     <Globe
-                        class="w-5 h-5 text-gray-500 group-hover:text-cyan-dark transition-colors duration-200"
+                        className="w-5 h-5 text-gray-500 group-hover:text-cyan-dark transition-colors duration-200"
                     />
                     <span class="flex-1 text-left uppercase"
                         >{lang === "en" ? "English" : "Español"}</span
